@@ -453,14 +453,14 @@ random_index <- sample(nrow(df), round(nrow(df) * 0.7))
 data_train <- df[random_index, ]
 data_test <- df[-random_index, ]
 
-##################### Random Forest Classification 
+##################### Random Forest Classification ####################
 tic()
 fitrf = randomForest(NObeyesdad ~ ., data = data_train, 
                      importance = TRUE, 
                      mtry = 3, 
                      ntree=100 ) 
 toc()
-# Prediction and performance test
+#################### Prediction and performance test####################
 yhat.test = predict(fitrf, data_test)
 tablerf <- table(yhat.test, data_test$NObeyesdad)
 accuracyrf <- mean(data_test$NObeyesdad == yhat.test) ##0.8056872
