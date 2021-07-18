@@ -6,7 +6,7 @@ library(C50)
 iris_train <- read.csv("C:/Users/ROG/Desktop/iris_train.csv")
 iris_test <- read.csv("C:/Users/ROG/Desktop/iris_test.csv")
 
-# Q1(a)
+# Q1(a) Perform the min-max normalization on the two datasets iris_train.csv and iris_test.csv.
 iris_train2 <- iris_train[, -5]
 iris_test2 <- iris_test[, -5]
 
@@ -23,14 +23,14 @@ for (i in 1:ncol(iris_train2)) {
 
 
 
-# Q1(b)
+# Q1(b) Perform the k-nearest neighbour classification using knn from the package class with k = 3.
 iris_train_labels <- iris_train$Species
 iris_test_labels <- iris_test$Species
 
 knn_predicted <- knn(train = iris_train_n, test = iris_test_n, cl = iris_train_labels, k = 3)
 
 
-# Q1(c)
+# Q1(c) Find out the testing accuracy in Q1(b).
 tb1 <- table(iris_test_labels, knn_predicted)
 ##                knn_predicted
 ## iris_test_labels setosa versicolor virginica
@@ -53,7 +53,7 @@ knn_predicted2 <- knn(train = iris_train_n, test = iris_test_n, cl = iris_train_
 
 
 
-# Q2
+# Q2 Write a function called knn_L1 that performs k-nearest neighbour classification using the L1-norm.
 knn_L1 <- function(train, test, cl, k){
   class <- rep(0, nrow(test))
   prob <- rep(0, nrow(test))
@@ -75,7 +75,7 @@ knn_L1 <- function(train, test, cl, k){
 
 
 
-# Q3
+# Q3 Redo Q1(b) and Q1(c) with your function in Q2.
 knn_L1predicted <- knn_L1(train = iris_train_n, test = iris_test_n, cl = iris_train_labels, k = 3)
 tb2 <- table(iris_test_labels, knn_L1predicted$class)
 ##
@@ -92,7 +92,8 @@ accuracy2 <- sum(diag(tb2)) / length(iris_test_labels)
 
 
 
-# Q4
+# Q4 Download the breast cancer datasets wbcd_train.csv and wbcd_test.csv. Perform the classification using 
+#  your function knn_L1() in Q2, knn() and C5.0. Compare the testing errors of these 3 methods. Use k = 11.
 wbcd_train <- read.csv("C:/Users/ROG/Desktop/wbcd_train.csv")
 wbcd_test <- read.csv("C:/Users/ROG/Desktop/wbcd_test.csv")
 
@@ -174,7 +175,9 @@ error_rate_c5 <- 1 - sum(diag(tb_c5)) / length(wbcd_test_labels)
 
 
 
-# Q6(a)
+# Q6(a) Import the datasets in R. For each dataset, check if there are rows with trading volume being 0
+# (the corresponding variable is Volume.USDT). If yes, remove the rows (e.g. use filter()). Store the cleaned
+# datsets with names BTC_min_c, ETH_min_c, BTC_day_c, and ETH_day_c.
 BTC_min <- read.csv("C:/Users/ROG/Desktop/BTCUSDT_minute.csv")
 ETH_min <- read.csv("C:/Users/ROG/Desktop/ETHUSDT_minute.csv")
 BTC_day <- read.csv("C:/Users/ROG/Desktop/BTCUSDT_day.csv")
@@ -197,14 +200,16 @@ BTC_day_c <- BTC_day
 ETH_day_c <- ETH_day
 
 
-# Q6(b)
+# Q6(b) Compute the log-return (recall Section 3.5) for the four datasets.
 BTC_min_c$log_return <- log(BTC_min_c$close / BTC_min_c$open)
 ETH_min_c$log_return <- log(ETH_min_c$close / ETH_min_c$open)
 BTC_day_c$log_return <- log(BTC_day_c$close / BTC_day_c$open)
 ETH_day_c$log_return <- log(ETH_day_c$close / ETH_day_c$open)
 
 
-# Q6(c)
+# Q6(c) Compute the sample correlation between the daily log-return of BTC and that of ETH using all the
+# data in BTC_day_c and ETH_day_c. Fit a simple linear regression of the daily log-return of ETH on the daily
+# log-return of BTC (response = daily log-return of ETH, predictor = daily log-return of BTC). Note
 cor(BTC_day_c$log_return, ETH_day_c$log_return, method = "pearson")
 ## [1] 0.7711948
 
@@ -230,7 +235,7 @@ summary(fit_daily)
 ## F-statistic:  1915 on 1 and 1305 DF,  p-value: < 2.2e-16
 
 
-# Q6(d)
+# Q6(d) Redo Q6(c) with the 1-minute log-return.
 cor(BTC_min_c$log_return, ETH_min_c$log_return, method = "pearson")
 ## [1] 0.8102123
 
@@ -256,7 +261,7 @@ summary(fit_minute)
 ## F-statistic: 5.026e+05 on 1 and 263052 DF,  p-value: < 2.2e-16
 
 
-# Q6(e)
+# Q6(e) What do you observe in Q6(c) and Q6(d)?
 # From fit_daily, we can see that for 1 unit increase in daily log-return of BTC, 
 # the daily log-return of ETH will increase by 0.9639902 unit on average.
 
@@ -271,14 +276,14 @@ summary(fit_minute)
 
 
 
-# Q7(a)
+# Q7(a) Use geom_density() to visualize the distributions of the 1-minute log-returns of BTC and ETH
 ggplot() +
   geom_density(data = BTC_min_c, mapping = aes(x = log_return), color = "red") +
   geom_density(data = ETH_min_c, mapping = aes(x = log_return), color = "blue")
 # It looks like they are not close to a normal distribution since they have long left tails.
 
 
-# Q7(b)
+# Q7(b) use shapiro.test to test if the daily log-returns of BTC and ETH follow a normal distribution.
 shapiro.test(BTC_day_c$log_return)
 # p-value is small, reject the null hypothesis that the data are from a normal distribution
 ##
@@ -301,21 +306,23 @@ shapiro.test(ETH_day_c$log_return)
 
 
 
-# Q8(a)
+# Q8(a) Create a scatterplot of the daily log-return of BTC (y) versus the daily trading volume in USDT
+# (the variable is Volume.USDT) (x) using the most recent 100 observations.
 ggplot(data = BTC_day_c[1:100,], aes(x = Volume.USDT, y = log_return)) +
   geom_point() +
   geom_smooth() +
   geom_smooth(method = "lm")
 
 
-# Q8(b)
+# Q8(b) Create a scatterplot of the absolute value of the daily log-return of BTC (y) versus the daily trading
+# volume in USDT (the variable is Volume.USDT) (x) using the most recent 100 observations.
 ggplot(data = BTC_day_c[1:100,], aes(x = Volume.USDT, y = abs(log_return))) +
   geom_point() +
   geom_smooth() +
   geom_smooth(method = "lm")
 
 
-# Q8(c)
+# Q8(c) What do you observe in Q8(a) and Q8(b)?
 # The daily log-return of BTC and the daily trading volume in USDT are not linearly related.
 # The absolute value of the daily log-return of BTC and the daily trading volume in USDT have
 # a weak positive linear relationship.
@@ -323,7 +330,8 @@ ggplot(data = BTC_day_c[1:100,], aes(x = Volume.USDT, y = abs(log_return))) +
 
 
 
-# Q9(a)
+# Q9(a) Compute the sample correlation of the daily log-return of ETH and the daily log return of BTC on
+# each day by using the most recent 30 days data.
 n <- nrow(ETH_day_c)
 day <- 30
 correlation <- rep(0, n - day + 1)
@@ -347,7 +355,7 @@ ggplot(mapping = aes(x = 1:(n - day + 1), y = rev(correlation))) +
 
 
 
-# Q10
+# Q10 What do you observe in Q9(b)?
 # The daily log-return of ETH and the daily log return of BTC during most of dates have
 # moderate and strong positive linear relationships since their values of correlation are 
 # between 0.5 and 1, while they have weak negative linear relationships within approximately 
