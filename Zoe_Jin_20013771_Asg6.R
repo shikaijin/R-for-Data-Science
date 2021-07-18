@@ -1,7 +1,8 @@
 library(neuralnet)
 library(tidyverse)
 
-# Q1(a)
+# Q1(a) Using asg_6_train.csv, train a feedforward neural network with 2 hidden layers, where each hidden
+# layer has 2 units, using the function neuralnet() from the package neuralnet.
 asg6_train <- read_csv("D:/STAT 362/asg_6_train.csv")
 
 asg6_test <- read_csv("D:/STAT 362/asg_6_test.csv")
@@ -32,7 +33,7 @@ asg6_ANN <- neuralnet(y~., data = asg6_train_n, hidden = c(2,2))
 
 
 
-# Q1(b)
+# Q1(b) Using asg_6_test.csv, evaluate the performance of the model in (a).
 asg6_test_n <- normalize(asg6_train, asg6_test)$test
 
 prediction <- neuralnet::compute(asg6_ANN, asg6_test_n[, 2:4])
@@ -45,7 +46,7 @@ cor(asg6_test_n$y, predicted_y)
 
 
 
-# Q1(c)
+# Q1(c) Using asg_6_train.csv, fit a linear regression model.
 fit <- lm(y~., data = asg6_train)
 summary(fit)
 ## 
@@ -73,7 +74,7 @@ summary(fit)
 
 
 
-# Q1(d)
+# Q1(d) Using asg_6_test.csv, evaluate the performance of the model in (c).
 prediction_y2 <- predict(fit, asg6_test)
 
 cor(asg6_test$y, prediction_y2)
