@@ -37,7 +37,8 @@ ggarrange(plot_1, plot_2, plot_3, plot_4)
 
 
 
-# Q2(a)
+# Q2(a) Write a function called neg_log_like_Gamma with inputs theta and x that returns the value of the
+# negative of the log-likelihood function evaluated at theta = (alpha, beta) given the data x.
 # Setting
 set.seed(1)
 alpha <- 1.5
@@ -56,7 +57,7 @@ neg_log_like_Gamma <- function(theta, x){
  -log_like_Gamma
 }
 
-# Q2(b)
+# Q2(b) Find the MLE of alpha and beta using optim, the function in Q2(a),
 # Optimization
 (est<- optim(par = runif(2, 0, 1), f= neg_log_like_Gamma, x = x, method = "L-BFGS-B")$par)
 
@@ -65,7 +66,8 @@ neg_log_like_Gamma <- function(theta, x){
 
 
 
-# Q3(a)
+# Q3(a) Write a function called neg_log_like_Pois with inputs beta, X and y that returns the value of the
+# negative of the log-likelihood function evaluated at beta given the data X and y.
 # Setting
 set.seed(1)
 beta <-c(0.3, 0.5, -0.5)
@@ -83,7 +85,8 @@ neg_log_like_Pois <- function(beta, X, y){
   -log_like_Pois
 }
 
-# Q3(b)
+# Q3(b) Find the MLE of  using optim, the function in Q3(a), and the simulated data at the beginning of
+# this question.
 # Optimization
 (beta_est <- optim(par = runif(3, 0, 1), f = neg_log_like_Pois, y = y, X = X, method = "BFGS")$par)
 
@@ -92,7 +95,9 @@ neg_log_like_Pois <- function(beta, X, y){
 
 
 
-# Q4
+# Q4 Write a function called dedf (density of empirical distribution function) to compute the empirical
+#  distribution function of the observation data at x. The inputs are x (a vector of length 1) and data (a vector
+# of arbitrary length).
 dedf <- function(x, data){
   n <- length(data)
   no_element_satisfied <- sum(data <= x)
@@ -116,7 +121,8 @@ ks_ts <-function(x, y){
 
 
 
-# Q6
+# Q6 write a function called plot_edf to create the following plot. The input
+# is data (a vector of arbitrary length).
 plot_edf <- function(data){
   x <- sort(data)
   y <- c(0, rep(0, length(x)))
@@ -137,7 +143,10 @@ plot_edf <- function(data){
 
 
 
-# Q7
+# Q7 The specifications for a certain kind of ribbon call for a mean breaking strength of 185 pounds. If five
+# pieces randomly selected from different rolls have breaking strengths of 171.6, 191.8, 178.3, 184.9, and 189.1
+# pounds, test the null hypothesis μ = 185 pounds against the alternative hypothesis μ < 185 pounds at the
+# 0.05 level of significance.
 q7 <- c(171.6, 191.8, 178.3, 184.9, 189.1)
 t.test(q7, mu = 185, alternative = "less")
 
@@ -157,7 +166,11 @@ t.test(q7, mu = 185, alternative = "less")
 
 
 
-# Q8 
+# Q8 To study the durability of a new paint for white center lines, a highway department painted test
+# strips across heavily traveled roads in eight different locations, and electronic counters showed that they
+# deteriorated after having been crossed by (to the nearest hundred) 142,600, 167,800, 136,500, 108,300,
+# 126,400, 133,700, 162,000, and 149,400 cars. Construct a 95% confidence interval for the average amount of
+# traffic (car crossings) that this paint can withstand before it deteriorates.
 q8 <- c(142600, 167800, 136500, 108300, 126400, 133700, 162000, 149400)
 t.test(q8, conf.level = 0.95)$conf.int
 
@@ -170,7 +183,8 @@ t.test(q8, conf.level = 0.95)$conf.int
 
 
 
-# Q9
+# Q9 In a random sample, 35 of 400 persons given a flu vaccine experienced some discomfort. Construct a 95
+# confidence interval for the true proportion of persons who will experience some discomfort from the vaccine.
 no_discomfort <- 35
 prop.test(no_discomfort, 400, p = no_discomfort/400 )$conf.int
 
