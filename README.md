@@ -7,4 +7,4 @@ The final project was with a team of 6 people working on Estimating Obesity Leve
 
 * Final project data: [View here](https://github.com/shikaijin/STAT-362-R-for-Data-Science/blob/8b41bf1530bff18cad33f09aee561ec304f3923f/ObesityDataSet_raw_and_data_sinthetic.csv)
 * Final project R code: [View here](https://github.com/shikaijin/STAT-362-R-for-Data-Science/blob/4587cca5a11678797dc3b3a01506e4e0b83a4744/Final-Project-code.r)
-* Final project paper: [View here](https://github.com/shikaijin/STAT-362-R-for-Data-Science/blob/8b41bf1530bff18cad33f09aee561ec304f3923f/STAT362,%20Final%20Project,%20Report.pdf)
+* Final project paper: [Contact me for detail](mailto:shikaijin7@gmail.com)
